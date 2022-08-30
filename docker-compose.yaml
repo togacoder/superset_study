@@ -5,3 +5,15 @@ services:
     container_name: superset
     ports:
       - "8088:8088"
+    environment:
+      VIRTUAL_HOST: 'toga.7ka.org'
+      VIRTUAL_PORT: 8088
+      LETSENCRYPT_HOST: toga.7ka.org
+      LETSENCRYPT_EMAIL: togaerror@gmail.com
+    networks:
+      - br-ext
+    restart: always
+
+networks:
+  br-ext:
+    external: true
