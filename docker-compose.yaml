@@ -13,7 +13,29 @@ services:
     networks:
       - br-ext
     restart: always
+  superset_redis:
+    image: redis:latest
+    container_name: superset_redis
+    ports:
+     - "6379:6379"
+  superset_mysql:
+    image: mysql:8.0
+    container_name: superset_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: superset
+      MYSQL_DATABASE: myapp
+      MYSQL_USER: superset
+      MYSQL_PASSWORD: superset
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 33066:3306
 
 networks:
   br-ext:
     external: true
+
