@@ -1,6 +1,8 @@
 #!/bin/bash
 CONTAINER_NAME='superset'
 
+docker exec -it ${CONTAINER_NAME} superset re-encrypt-secrets
+
 docker exec -it ${CONTAINER_NAME} superset db upgrade
 
 docker exec -it ${CONTAINER_NAME} superset fab create-admin \

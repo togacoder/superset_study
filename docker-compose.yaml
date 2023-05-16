@@ -7,7 +7,7 @@ services:
       - "8088:8088"
     restart: always
   mysql:
-    image: mysql:8.0
+    image: mysql:5.7
     container_name: superset_mysql
     ports:
       - "3306:3306"
