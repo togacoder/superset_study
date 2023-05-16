@@ -5,15 +5,12 @@ services:
     container_name: superset
     ports:
       - "8088:8088"
-    environment:
-      VIRTUAL_HOST: 'toga.7ka.org'
-      VIRTUAL_PORT: 8088
-      LETSENCRYPT_HOST: toga.7ka.org
-      LETSENCRYPT_EMAIL: togaerror@gmail.com
-    networks:
-      - br-ext
     restart: always
-
-networks:
-  br-ext:
-    external: true
+  mysql:
+    image: mysql:8.0
+    container_name: superset_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: superset
+      MYSQL_DATABASE: superset
