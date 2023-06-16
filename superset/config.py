@@ -193,11 +193,10 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # Use a strong complex alphanumeric string and use a tool to help you generate
 # a sufficiently random sequence, ex: openssl rand -base64 42"
 SECRET_KEY = os.environ.get("SUPERSET_SECRET_KEY") or CHANGE_ME_SECRET_KEY
-SECRET_KEY = '0F0gut00JezAcyz2aOpyjejIHHhcoaRWyuNRnZ2LCPBy8Uez8mUpNtC4'
 
 # The SQLAlchemy connection string.
 # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(DATA_DIR, "superset.db")
-SQLALCHEMY_DATABASE_URI = 'mysql://root:superset@superset_mysql/superset'
+SQLALCHEMY_DATABASE_URI = 'mysql://' + os.environ['MYSQL_USER'] + ':' + os.environ['MYSQL_PASSWORD'] + '@db/superset'
 # SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
 
 # In order to hook up a custom password store for all SQLACHEMY connections
@@ -354,7 +353,8 @@ PUBLIC_ROLE_LIKE: Optional[str] = None
 # Babel config for translations
 # ---------------------------------------------------
 # Setup default language
-BABEL_DEFAULT_LOCALE = "en"
+# BABEL_DEFAULT_LOCALE = "en"
+BABEL_DEFAULT_LOCALE = "ja"
 # Your application default translation path
 BABEL_DEFAULT_FOLDER = "superset/translations"
 # The allowed translation for you app
@@ -1432,7 +1432,7 @@ SQLA_TABLE_MUTATOR = lambda table: table
 # Requires GLOBAL_ASYNC_QUERIES feature flag to be enabled.
 GLOBAL_ASYNC_QUERIES_REDIS_CONFIG = {
     "port": 6379,
-    "host": "127.0.0.1",
+    "host": "cache",
     "password": "",
     "db": 0,
     "ssl": False,

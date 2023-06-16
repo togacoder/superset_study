@@ -1,16 +1,23 @@
-version: '3.7'
+version: '3'
 services:
   superset:
-    build: .
+    build: superset/.
     container_name: superset
     ports:
       - "8088:8088"
-    restart: always
-  mysql:
-    image: mysql:5.7
-    container_name: superset_mysql
-    ports:
-      - "3306:3306"
+    env_file:
+      - ./superset/env_file
+    depends_on:
+      - db
+  db:
+    build: db/.
+    container_name: db
     environment:
-      MYSQL_ROOT_PASSWORD: superset
-      MYSQL_DATABASE: superset
+      MYSQL_ROOT_PASSWORD: passw0rd
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/entrypoint:/docker-entrypoint-initdb.d
+  cache:
+    image: redis:7
+    container_name: cache
+
